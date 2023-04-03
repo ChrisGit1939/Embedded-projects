@@ -1,0 +1,6 @@
+../Core/Src/main.c:142:8:LCD_CMD	24	static
+../Core/Src/main.c:133:8:LCD_DATA	24	static
+../Core/Src/main.c:173:8:LCD_CLEAR	16	static
+../Core/Src/main.c:287:6:SystemClock_Config	72	static,ignoring_inline_asm
+../Core/Src/main.c:65:5:main	552	static,ignoring_inline_asm
+../Core/Src/main.c:393:6:Error_Handler	0	static,ignoring_inline_asm
