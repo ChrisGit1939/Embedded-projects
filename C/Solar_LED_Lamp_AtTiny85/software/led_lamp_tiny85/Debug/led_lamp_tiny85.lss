@@ -1,0 +1,1758 @@
+
+led_lamp_tiny85.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000828  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000002  00800060  00000828  000008bc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000013  00800062  00800062  000008be  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000008be  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000008f0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000098  00000000  00000000  0000092c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000010f5  00000000  00000000  000009c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000006b3  00000000  00000000  00001ab9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000b4f  00000000  00000000  0000216c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000174  00000000  00000000  00002cbc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000006dd  00000000  00000000  00002e30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000e4b  00000000  00000000  0000350d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000088  00000000  00000000  00004358  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	fa c2       	rjmp	.+1524   	; 0x5fc <__vector_3>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+
+0000002a <__do_copy_data>:
+  2a:	10 e0       	ldi	r17, 0x00	; 0
+  2c:	a0 e6       	ldi	r26, 0x60	; 96
+  2e:	b0 e0       	ldi	r27, 0x00	; 0
+  30:	e8 e2       	ldi	r30, 0x28	; 40
+  32:	f8 e0       	ldi	r31, 0x08	; 8
+  34:	02 c0       	rjmp	.+4      	; 0x3a <__do_copy_data+0x10>
+  36:	05 90       	lpm	r0, Z+
+  38:	0d 92       	st	X+, r0
+  3a:	a2 36       	cpi	r26, 0x62	; 98
+  3c:	b1 07       	cpc	r27, r17
+  3e:	d9 f7       	brne	.-10     	; 0x36 <__do_copy_data+0xc>
+
+00000040 <__do_clear_bss>:
+  40:	20 e0       	ldi	r18, 0x00	; 0
+  42:	a2 e6       	ldi	r26, 0x62	; 98
+  44:	b0 e0       	ldi	r27, 0x00	; 0
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a5 37       	cpi	r26, 0x75	; 117
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	f7 d2       	rcall	.+1518   	; 0x640 <main>
+  52:	e8 c3       	rjmp	.+2000   	; 0x824 <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <led_r_on>:
+void led_r_on (void)
+{
+	PORTB |= (1 << PB4);
+  56:	88 b3       	in	r24, 0x18	; 24
+  58:	80 61       	ori	r24, 0x10	; 16
+  5a:	88 bb       	out	0x18, r24	; 24
+  5c:	08 95       	ret
+
+0000005e <led_r_off>:
+}
+
+void led_r_off (void)
+{
+	PORTB &= ~(1 << PB4);
+  5e:	88 b3       	in	r24, 0x18	; 24
+  60:	8f 7e       	andi	r24, 0xEF	; 239
+  62:	88 bb       	out	0x18, r24	; 24
+  64:	08 95       	ret
+
+00000066 <init_timer1>:
+}
+
+void init_timer1(void)    // init timer to compare match interrupt
+{
+	TCCR1 |= (1 << CTC1); // clear timer on compare match
+  66:	80 b7       	in	r24, 0x30	; 48
+  68:	80 68       	ori	r24, 0x80	; 128
+  6a:	80 bf       	out	0x30, r24	; 48
+	TCCR1 |= (1 << CS10) | (1 << CS11) | (1 << CS12) | (1 << CS13); // set prescaler FCPU/16384
+  6c:	80 b7       	in	r24, 0x30	; 48
+  6e:	8f 60       	ori	r24, 0x0F	; 15
+  70:	80 bf       	out	0x30, r24	; 48
+	OCR1C = 74; // value timer1 to compare match
+  72:	8a e4       	ldi	r24, 0x4A	; 74
+  74:	8d bd       	out	0x2d, r24	; 45
+	TIMSK |= (1 << OCIE1A); // enable compare match interrupt
+  76:	89 b7       	in	r24, 0x39	; 57
+  78:	80 64       	ori	r24, 0x40	; 64
+  7a:	89 bf       	out	0x39, r24	; 57
+  7c:	08 95       	ret
+
+0000007e <pwm_setup>:
+}
+
+
+void pwm_setup(void)
+{
+	TCCR0B |= (1 << CS01);   //prescaler CLK/8
+  7e:	83 b7       	in	r24, 0x33	; 51
+  80:	82 60       	ori	r24, 0x02	; 2
+  82:	83 bf       	out	0x33, r24	; 51
+	TCCR0A |= (1 << WGM01) | (1 << WGM00); // fast PWM mode
+  84:	8a b5       	in	r24, 0x2a	; 42
+  86:	83 60       	ori	r24, 0x03	; 3
+  88:	8a bd       	out	0x2a, r24	; 42
+	TCCR0A |= (1 << COM0A1) | (1 << COM0A0); // set OCR0A output on compare match, counter upwards
+  8a:	8a b5       	in	r24, 0x2a	; 42
+  8c:	80 6c       	ori	r24, 0xC0	; 192
+  8e:	8a bd       	out	0x2a, r24	; 42
+	TCCR0A |= (1 << COM0B1) | (1 << COM0B0); // set OCR0B output on compare match, counter upwards
+  90:	8a b5       	in	r24, 0x2a	; 42
+  92:	80 63       	ori	r24, 0x30	; 48
+  94:	8a bd       	out	0x2a, r24	; 42
+	OCR0A = 255;                             // PWM out
+  96:	8f ef       	ldi	r24, 0xFF	; 255
+  98:	89 bd       	out	0x29, r24	; 41
+	OCR0B = 255;                             // PWM LED_G
+  9a:	88 bd       	out	0x28, r24	; 40
+  9c:	08 95       	ret
+
+0000009e <adc_solar_measure>:
+
+
+
+uint8_t adc_solar_measure(void)
+{
+	ADMUX |= (1 << MUX0);
+  9e:	87 b1       	in	r24, 0x07	; 7
+  a0:	81 60       	ori	r24, 0x01	; 1
+  a2:	87 b9       	out	0x07, r24	; 7
+	ADMUX &=~ (1 << MUX1);              // set ADC1 reset mux1
+  a4:	87 b1       	in	r24, 0x07	; 7
+  a6:	8d 7f       	andi	r24, 0xFD	; 253
+  a8:	87 b9       	out	0x07, r24	; 7
+	ADMUX |= (1 << ADLAR);
+  aa:	87 b1       	in	r24, 0x07	; 7
+  ac:	80 62       	ori	r24, 0x20	; 32
+  ae:	87 b9       	out	0x07, r24	; 7
+	ADCSRA |= (1 << ADEN);           // ADC Enable
+  b0:	86 b1       	in	r24, 0x06	; 6
+  b2:	80 68       	ori	r24, 0x80	; 128
+  b4:	86 b9       	out	0x06, r24	; 6
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);  // prescaler clock /128
+  b6:	86 b1       	in	r24, 0x06	; 6
+  b8:	87 60       	ori	r24, 0x07	; 7
+  ba:	86 b9       	out	0x06, r24	; 6
+	
+	ADCSRA |= (1 << ADSC);  // Start the conversion
+  bc:	86 b1       	in	r24, 0x06	; 6
+  be:	80 64       	ori	r24, 0x40	; 64
+  c0:	86 b9       	out	0x06, r24	; 6
+	while(ADCSRA & (1 << ADSC));    // wait to finish conversion
+  c2:	36 99       	sbic	0x06, 6	; 6
+  c4:	fe cf       	rjmp	.-4      	; 0xc2 <adc_solar_measure+0x24>
+	
+	return ADCH;
+  c6:	85 b1       	in	r24, 0x05	; 5
+	
+	ADCSRA |= (0 << ADEN);           // ADC Disable
+}
+  c8:	08 95       	ret
+
+000000ca <adc_battery_measure>:
+
+uint8_t adc_battery_measure(void)
+{
+	ADMUX |= (1 << MUX0) | (1 << MUX1);              // set ADC3
+  ca:	87 b1       	in	r24, 0x07	; 7
+  cc:	83 60       	ori	r24, 0x03	; 3
+  ce:	87 b9       	out	0x07, r24	; 7
+	ADMUX |= (1 << ADLAR);
+  d0:	87 b1       	in	r24, 0x07	; 7
+  d2:	80 62       	ori	r24, 0x20	; 32
+  d4:	87 b9       	out	0x07, r24	; 7
+	ADCSRA |= (1 << ADEN);           // ADC Enable
+  d6:	86 b1       	in	r24, 0x06	; 6
+  d8:	80 68       	ori	r24, 0x80	; 128
+  da:	86 b9       	out	0x06, r24	; 6
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);  // prescaler clock /128
+  dc:	86 b1       	in	r24, 0x06	; 6
+  de:	87 60       	ori	r24, 0x07	; 7
+  e0:	86 b9       	out	0x06, r24	; 6
+
+	ADCSRA |= (1 << ADSC);  // Start the conversion
+  e2:	86 b1       	in	r24, 0x06	; 6
+  e4:	80 64       	ori	r24, 0x40	; 64
+  e6:	86 b9       	out	0x06, r24	; 6
+	while(ADCSRA & (1 << ADSC));    // wait to finish conversion
+  e8:	36 99       	sbic	0x06, 6	; 6
+  ea:	fe cf       	rjmp	.-4      	; 0xe8 <adc_battery_measure+0x1e>
+
+	return ADCH;
+  ec:	85 b1       	in	r24, 0x05	; 5
+	
+	ADCSRA |= (0 << ADEN);           // ADC Disable
+}
+  ee:	08 95       	ret
+
+000000f0 <led_out_brightness>:
+
+void led_out_brightness (uint8_t brightness, uint8_t max_bat_voltage)
+{
+  f0:	cf 93       	push	r28
+  f2:	df 93       	push	r29
+  f4:	c8 2f       	mov	r28, r24
+  f6:	d6 2f       	mov	r29, r22
+	uint8_t brightness_factor = 0;
+	uint8_t current_battery_voltage = 0;
+	uint8_t pwm_value = 0;
+	
+
+	current_battery_voltage = adc_battery_measure();
+  f8:	e8 df       	rcall	.-48     	; 0xca <adc_battery_measure>
+  fa:	28 2f       	mov	r18, r24
+	
+	if(max_bat_voltage < current_battery_voltage)
+  fc:	d8 17       	cp	r29, r24
+  fe:	d0 f4       	brcc	.+52     	; 0x134 <led_out_brightness+0x44>
+	{
+		max_bat_voltage = current_battery_voltage;
+		big_variable = max_bat_voltage * 191;    // 191 is 75% of the value 255
+ 100:	48 2f       	mov	r20, r24
+ 102:	50 e0       	ldi	r21, 0x00	; 0
+ 104:	ca 01       	movw	r24, r20
+ 106:	88 0f       	add	r24, r24
+ 108:	99 1f       	adc	r25, r25
+ 10a:	84 0f       	add	r24, r20
+ 10c:	95 1f       	adc	r25, r21
+ 10e:	00 24       	eor	r0, r0
+ 110:	96 95       	lsr	r25
+ 112:	87 95       	ror	r24
+ 114:	07 94       	ror	r0
+ 116:	96 95       	lsr	r25
+ 118:	87 95       	ror	r24
+ 11a:	07 94       	ror	r0
+ 11c:	98 2f       	mov	r25, r24
+ 11e:	80 2d       	mov	r24, r0
+ 120:	84 1b       	sub	r24, r20
+ 122:	95 0b       	sbc	r25, r21
+		big_variable = big_variable / 255;
+ 124:	6f ef       	ldi	r22, 0xFF	; 255
+ 126:	70 e0       	ldi	r23, 0x00	; 0
+ 128:	56 d3       	rcall	.+1708   	; 0x7d6 <__udivmodhi4>
+ 12a:	46 2f       	mov	r20, r22
+ 12c:	57 2f       	mov	r21, r23
+		nominal_bat_voltage = big_variable;       // nominal voltage is 75% max battery voltage
+ 12e:	60 93 6c 00 	sts	0x006C, r22	; 0x80006c <nominal_bat_voltage.1779>
+ 132:	02 c0       	rjmp	.+4      	; 0x138 <led_out_brightness+0x48>
+
+void led_out_brightness (uint8_t brightness, uint8_t max_bat_voltage)
+{
+	
+	static uint8_t nominal_bat_voltage = 0;
+	uint16_t big_variable = 0;    // 16-bit variable needed to complex calculations :)
+ 134:	40 e0       	ldi	r20, 0x00	; 0
+ 136:	50 e0       	ldi	r21, 0x00	; 0
+		big_variable = max_bat_voltage * 191;    // 191 is 75% of the value 255
+		big_variable = big_variable / 255;
+		nominal_bat_voltage = big_variable;       // nominal voltage is 75% max battery voltage
+	}
+	
+	if(current_battery_voltage > nominal_bat_voltage)         // battery voltage > nominal voltage
+ 138:	80 91 6c 00 	lds	r24, 0x006C	; 0x80006c <nominal_bat_voltage.1779>
+ 13c:	82 17       	cp	r24, r18
+ 13e:	d0 f4       	brcc	.+52     	; 0x174 <led_out_brightness+0x84>
+ 140:	28 1b       	sub	r18, r24
+	{
+		overvoltage = current_battery_voltage - nominal_bat_voltage;      // overvoltage = battery voltage - nominal battery voltage
+		d = 90;															 // the value selected experimentally
+ 142:	9a e5       	ldi	r25, 0x5A	; 90
+		
+		for(loop_value = overvoltage; loop_value > 0; loop_value--)     // adding the value d to big variable 
+ 144:	07 c0       	rjmp	.+14     	; 0x154 <led_out_brightness+0x64>
+		{
+			big_variable = big_variable + d;                          
+ 146:	49 0f       	add	r20, r25
+ 148:	51 1d       	adc	r21, r1
+			d--;
+ 14a:	91 50       	subi	r25, 0x01	; 1
+			if(d < 2) d = 2;
+ 14c:	92 30       	cpi	r25, 0x02	; 2
+ 14e:	08 f4       	brcc	.+2      	; 0x152 <led_out_brightness+0x62>
+ 150:	92 e0       	ldi	r25, 0x02	; 2
+	if(current_battery_voltage > nominal_bat_voltage)         // battery voltage > nominal voltage
+	{
+		overvoltage = current_battery_voltage - nominal_bat_voltage;      // overvoltage = battery voltage - nominal battery voltage
+		d = 90;															 // the value selected experimentally
+		
+		for(loop_value = overvoltage; loop_value > 0; loop_value--)     // adding the value d to big variable 
+ 152:	21 50       	subi	r18, 0x01	; 1
+ 154:	21 11       	cpse	r18, r1
+ 156:	f7 cf       	rjmp	.-18     	; 0x146 <led_out_brightness+0x56>
+			d--;
+			if(d < 2) d = 2;
+		}
+		
+
+		big_variable = big_variable / 22;
+ 158:	ca 01       	movw	r24, r20
+ 15a:	66 e1       	ldi	r22, 0x16	; 22
+ 15c:	70 e0       	ldi	r23, 0x00	; 0
+ 15e:	3b d3       	rcall	.+1654   	; 0x7d6 <__udivmodhi4>
+		brightness_factor = 255 - big_variable;
+ 160:	60 95       	com	r22
+		big_variable = brightness * brightness_factor;
+ 162:	70 e0       	ldi	r23, 0x00	; 0
+ 164:	8c 2f       	mov	r24, r28
+ 166:	90 e0       	ldi	r25, 0x00	; 0
+ 168:	19 d3       	rcall	.+1586   	; 0x79c <__mulhi3>
+		big_variable = big_variable / 255;
+ 16a:	6f ef       	ldi	r22, 0xFF	; 255
+ 16c:	70 e0       	ldi	r23, 0x00	; 0
+ 16e:	33 d3       	rcall	.+1638   	; 0x7d6 <__udivmodhi4>
+		pwm_value = 255 - big_variable;
+ 170:	60 95       	com	r22
+ 172:	13 c0       	rjmp	.+38     	; 0x19a <led_out_brightness+0xaa>
+	}
+	else
+	{
+		pwm_value = 255 - brightness;
+ 174:	6c 2f       	mov	r22, r28
+ 176:	60 95       	com	r22
+ 178:	10 c0       	rjmp	.+32     	; 0x19a <led_out_brightness+0xaa>
+	}
+	while(OCR0A != pwm_value)    // slowly change led brightness
+	{
+		if (OCR0A < pwm_value)
+ 17a:	89 b5       	in	r24, 0x29	; 41
+ 17c:	86 17       	cp	r24, r22
+ 17e:	20 f4       	brcc	.+8      	; 0x188 <led_out_brightness+0x98>
+		{
+			OCR0A ++;
+ 180:	89 b5       	in	r24, 0x29	; 41
+ 182:	8f 5f       	subi	r24, 0xFF	; 255
+ 184:	89 bd       	out	0x29, r24	; 41
+ 186:	03 c0       	rjmp	.+6      	; 0x18e <led_out_brightness+0x9e>
+		}
+		else
+		{
+			OCR0A --;
+ 188:	89 b5       	in	r24, 0x29	; 41
+ 18a:	81 50       	subi	r24, 0x01	; 1
+ 18c:	89 bd       	out	0x29, r24	; 41
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 18e:	83 ec       	ldi	r24, 0xC3	; 195
+ 190:	99 e0       	ldi	r25, 0x09	; 9
+ 192:	01 97       	sbiw	r24, 0x01	; 1
+ 194:	f1 f7       	brne	.-4      	; 0x192 <led_out_brightness+0xa2>
+ 196:	00 c0       	rjmp	.+0      	; 0x198 <led_out_brightness+0xa8>
+ 198:	00 00       	nop
+	}
+	else
+	{
+		pwm_value = 255 - brightness;
+	}
+	while(OCR0A != pwm_value)    // slowly change led brightness
+ 19a:	89 b5       	in	r24, 0x29	; 41
+ 19c:	68 13       	cpse	r22, r24
+ 19e:	ed cf       	rjmp	.-38     	; 0x17a <led_out_brightness+0x8a>
+		{
+			OCR0A --;
+		}
+		_delay_ms(10);
+	}
+}
+ 1a0:	df 91       	pop	r29
+ 1a2:	cf 91       	pop	r28
+ 1a4:	08 95       	ret
+
+000001a6 <regul_brightness>:
+
+
+
+uint8_t regul_brightness (uint8_t prev_bat_status, uint8_t max_bat_voltage, uint8_t min_bat_voltage)
+{
+ 1a6:	ff 92       	push	r15
+ 1a8:	0f 93       	push	r16
+ 1aa:	1f 93       	push	r17
+ 1ac:	cf 93       	push	r28
+ 1ae:	df 93       	push	r29
+ 1b0:	f8 2e       	mov	r15, r24
+ 1b2:	c6 2f       	mov	r28, r22
+ 1b4:	04 2f       	mov	r16, r20
+	static uint8_t previous_battery_voltage = 0;
+	static uint8_t first_run = TRUE;
+	static uint8_t cycle_battery = MAX_CHARGING;
+	static uint8_t cycle_day = 0;
+	
+	current_battery_voltage = adc_battery_measure();  // measure battery voltage
+ 1b6:	89 df       	rcall	.-238    	; 0xca <adc_battery_measure>
+ 1b8:	d8 2f       	mov	r29, r24
+	if(first_run == TRUE)                 // if first run....
+ 1ba:	80 91 61 00 	lds	r24, 0x0061	; 0x800061 <first_run.1806>
+ 1be:	81 30       	cpi	r24, 0x01	; 1
+ 1c0:	21 f4       	brne	.+8      	; 0x1ca <regul_brightness+0x24>
+	{
+		previous_battery_voltage = current_battery_voltage;   // assign current voltage value
+ 1c2:	d0 93 6b 00 	sts	0x006B, r29	; 0x80006b <previous_battery_voltage.1805>
+		first_run = FALSE;
+ 1c6:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <first_run.1806>
+	}
+	
+	cycle_day ++;
+ 1ca:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <cycle_day.1808>
+ 1ce:	8f 5f       	subi	r24, 0xFF	; 255
+ 1d0:	80 93 6a 00 	sts	0x006A, r24	; 0x80006a <cycle_day.1808>
+	
+	switch (cycle_battery)
+ 1d4:	90 91 69 00 	lds	r25, 0x0069	; 0x800069 <cycle_battery.1807>
+ 1d8:	91 30       	cpi	r25, 0x01	; 1
+ 1da:	11 f1       	breq	.+68     	; 0x220 <__DATA_REGION_LENGTH__+0x20>
+ 1dc:	18 f0       	brcs	.+6      	; 0x1e4 <regul_brightness+0x3e>
+ 1de:	92 30       	cpi	r25, 0x02	; 2
+ 1e0:	e1 f1       	breq	.+120    	; 0x25a <__DATA_REGION_LENGTH__+0x5a>
+ 1e2:	56 c0       	rjmp	.+172    	; 0x290 <__stack+0x31>
+	{
+	case MAX_CHARGING:
+		if (current_battery_voltage >= max_bat_voltage || cycle_day >= 7)
+ 1e4:	dc 17       	cp	r29, r28
+ 1e6:	10 f4       	brcc	.+4      	; 0x1ec <regul_brightness+0x46>
+ 1e8:	87 30       	cpi	r24, 0x07	; 7
+ 1ea:	28 f0       	brcs	.+10     	; 0x1f6 <regul_brightness+0x50>
+		{	
+			cycle_battery = MAX_DISCHARGING;
+ 1ec:	82 e0       	ldi	r24, 0x02	; 2
+ 1ee:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <cycle_battery.1807>
+			cycle_day = 0;
+ 1f2:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <cycle_day.1808>
+}
+
+
+
+uint8_t regul_brightness (uint8_t prev_bat_status, uint8_t max_bat_voltage, uint8_t min_bat_voltage)
+{
+ 1f6:	80 e0       	ldi	r24, 0x00	; 0
+ 1f8:	10 c0       	rjmp	.+32     	; 0x21a <__DATA_REGION_LENGTH__+0x1a>
+			cycle_battery = MAX_DISCHARGING;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+		{
+			OCR0B = 0;
+ 1fa:	18 bc       	out	0x28, r1	; 40
+ 1fc:	e3 ec       	ldi	r30, 0xC3	; 195
+ 1fe:	f9 e0       	ldi	r31, 0x09	; 9
+ 200:	31 97       	sbiw	r30, 0x01	; 1
+ 202:	f1 f7       	brne	.-4      	; 0x200 <__DATA_REGION_LENGTH__>
+ 204:	00 c0       	rjmp	.+0      	; 0x206 <__DATA_REGION_LENGTH__+0x6>
+ 206:	00 00       	nop
+			_delay_ms(10);
+			OCR0B = 255;
+ 208:	9f ef       	ldi	r25, 0xFF	; 255
+ 20a:	98 bd       	out	0x28, r25	; 40
+ 20c:	ef e0       	ldi	r30, 0x0F	; 15
+ 20e:	f7 e2       	ldi	r31, 0x27	; 39
+ 210:	31 97       	sbiw	r30, 0x01	; 1
+ 212:	f1 f7       	brne	.-4      	; 0x210 <__DATA_REGION_LENGTH__+0x10>
+ 214:	00 c0       	rjmp	.+0      	; 0x216 <__DATA_REGION_LENGTH__+0x16>
+ 216:	00 00       	nop
+		if (current_battery_voltage >= max_bat_voltage || cycle_day >= 7)
+		{	
+			cycle_battery = MAX_DISCHARGING;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+ 218:	8f 5f       	subi	r24, 0xFF	; 255
+ 21a:	88 30       	cpi	r24, 0x08	; 8
+ 21c:	70 f3       	brcs	.-36     	; 0x1fa <regul_brightness+0x54>
+ 21e:	38 c0       	rjmp	.+112    	; 0x290 <__stack+0x31>
+			OCR0B = 255;
+			_delay_ms(40);
+		}
+		break;
+	case NORMAL_WORK:
+		if (cycle_day >= 60)
+ 220:	8c 33       	cpi	r24, 0x3C	; 60
+ 222:	20 f0       	brcs	.+8      	; 0x22c <__DATA_REGION_LENGTH__+0x2c>
+		{
+			cycle_battery = MAX_CHARGING;
+ 224:	10 92 69 00 	sts	0x0069, r1	; 0x800069 <cycle_battery.1807>
+			cycle_day = 0;
+ 228:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <cycle_day.1808>
+}
+
+
+
+uint8_t regul_brightness (uint8_t prev_bat_status, uint8_t max_bat_voltage, uint8_t min_bat_voltage)
+{
+ 22c:	c0 e0       	ldi	r28, 0x00	; 0
+ 22e:	12 c0       	rjmp	.+36     	; 0x254 <__DATA_REGION_LENGTH__+0x54>
+			cycle_battery = MAX_CHARGING;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+		{
+			OCR0B = 0;
+ 230:	18 bc       	out	0x28, r1	; 40
+			led_r_on();
+ 232:	11 df       	rcall	.-478    	; 0x56 <led_r_on>
+ 234:	83 ec       	ldi	r24, 0xC3	; 195
+ 236:	99 e0       	ldi	r25, 0x09	; 9
+ 238:	01 97       	sbiw	r24, 0x01	; 1
+ 23a:	f1 f7       	brne	.-4      	; 0x238 <__DATA_REGION_LENGTH__+0x38>
+ 23c:	00 c0       	rjmp	.+0      	; 0x23e <__DATA_REGION_LENGTH__+0x3e>
+ 23e:	00 00       	nop
+			_delay_ms(10);
+			OCR0B = 255;
+ 240:	8f ef       	ldi	r24, 0xFF	; 255
+ 242:	88 bd       	out	0x28, r24	; 40
+			led_r_off();
+ 244:	0c df       	rcall	.-488    	; 0x5e <led_r_off>
+ 246:	ef e0       	ldi	r30, 0x0F	; 15
+ 248:	f7 e2       	ldi	r31, 0x27	; 39
+ 24a:	31 97       	sbiw	r30, 0x01	; 1
+ 24c:	f1 f7       	brne	.-4      	; 0x24a <__DATA_REGION_LENGTH__+0x4a>
+ 24e:	00 c0       	rjmp	.+0      	; 0x250 <__DATA_REGION_LENGTH__+0x50>
+ 250:	00 00       	nop
+		if (cycle_day >= 60)
+		{
+			cycle_battery = MAX_CHARGING;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+ 252:	cf 5f       	subi	r28, 0xFF	; 255
+ 254:	c8 30       	cpi	r28, 0x08	; 8
+ 256:	60 f3       	brcs	.-40     	; 0x230 <__DATA_REGION_LENGTH__+0x30>
+ 258:	1b c0       	rjmp	.+54     	; 0x290 <__stack+0x31>
+			led_r_off();
+			_delay_ms(40);
+		}		
+		break;
+	case MAX_DISCHARGING:
+		if (prev_bat_status == DISCHARGED)
+ 25a:	f1 e0       	ldi	r31, 0x01	; 1
+ 25c:	ff 12       	cpse	r15, r31
+ 25e:	05 c0       	rjmp	.+10     	; 0x26a <__stack+0xb>
+		{
+			cycle_battery = NORMAL_WORK;
+ 260:	81 e0       	ldi	r24, 0x01	; 1
+ 262:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <cycle_battery.1807>
+			cycle_day = 0;
+ 266:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <cycle_day.1808>
+}
+
+
+
+uint8_t regul_brightness (uint8_t prev_bat_status, uint8_t max_bat_voltage, uint8_t min_bat_voltage)
+{
+ 26a:	c0 e0       	ldi	r28, 0x00	; 0
+ 26c:	0f c0       	rjmp	.+30     	; 0x28c <__stack+0x2d>
+			cycle_battery = NORMAL_WORK;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+		{
+			led_r_on();
+ 26e:	f3 de       	rcall	.-538    	; 0x56 <led_r_on>
+ 270:	83 ec       	ldi	r24, 0xC3	; 195
+ 272:	99 e0       	ldi	r25, 0x09	; 9
+ 274:	01 97       	sbiw	r24, 0x01	; 1
+ 276:	f1 f7       	brne	.-4      	; 0x274 <__stack+0x15>
+ 278:	00 c0       	rjmp	.+0      	; 0x27a <__stack+0x1b>
+ 27a:	00 00       	nop
+			_delay_ms(10);
+			led_r_off();
+ 27c:	f0 de       	rcall	.-544    	; 0x5e <led_r_off>
+ 27e:	ef e0       	ldi	r30, 0x0F	; 15
+ 280:	f7 e2       	ldi	r31, 0x27	; 39
+ 282:	31 97       	sbiw	r30, 0x01	; 1
+ 284:	f1 f7       	brne	.-4      	; 0x282 <__stack+0x23>
+ 286:	00 c0       	rjmp	.+0      	; 0x288 <__stack+0x29>
+ 288:	00 00       	nop
+		if (prev_bat_status == DISCHARGED)
+		{
+			cycle_battery = NORMAL_WORK;
+			cycle_day = 0;
+		}
+		for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+ 28a:	cf 5f       	subi	r28, 0xFF	; 255
+ 28c:	c8 30       	cpi	r28, 0x08	; 8
+ 28e:	78 f3       	brcs	.-34     	; 0x26e <__stack+0xf>
+			_delay_ms(40);
+		}
+		break;	
+	}
+	
+	current_difference_battery_voltage = current_battery_voltage - min_bat_voltage;
+ 290:	1d 2f       	mov	r17, r29
+ 292:	10 1b       	sub	r17, r16
+	previous_difference_battery_voltage = previous_battery_voltage - min_bat_voltage;
+ 294:	c0 91 6b 00 	lds	r28, 0x006B	; 0x80006b <previous_battery_voltage.1805>
+ 298:	c0 1b       	sub	r28, r16
+	
+	if (previous_difference_battery_voltage <= current_difference_battery_voltage)  // if battery voltage today is higher than yesterday
+ 29a:	1c 17       	cp	r17, r28
+ 29c:	08 f4       	brcc	.+2      	; 0x2a0 <__stack+0x41>
+ 29e:	50 c0       	rjmp	.+160    	; 0x340 <__stack+0xe1>
+	{
+		OCR0B = 0;              // led signal
+ 2a0:	18 bc       	out	0x28, r1	; 40
+ 2a2:	f7 e7       	ldi	r31, 0x77	; 119
+ 2a4:	2c e0       	ldi	r18, 0x0C	; 12
+ 2a6:	83 e0       	ldi	r24, 0x03	; 3
+ 2a8:	f1 50       	subi	r31, 0x01	; 1
+ 2aa:	20 40       	sbci	r18, 0x00	; 0
+ 2ac:	80 40       	sbci	r24, 0x00	; 0
+ 2ae:	e1 f7       	brne	.-8      	; 0x2a8 <__stack+0x49>
+ 2b0:	00 c0       	rjmp	.+0      	; 0x2b2 <__stack+0x53>
+ 2b2:	00 00       	nop
+		_delay_ms(999);         //
+		OCR0B = 255;            //
+ 2b4:	8f ef       	ldi	r24, 0xFF	; 255
+ 2b6:	88 bd       	out	0x28, r24	; 40
+		
+		
+		switch (cycle_battery)
+ 2b8:	80 91 69 00 	lds	r24, 0x0069	; 0x800069 <cycle_battery.1807>
+ 2bc:	81 30       	cpi	r24, 0x01	; 1
+ 2be:	61 f0       	breq	.+24     	; 0x2d8 <__stack+0x79>
+ 2c0:	18 f0       	brcs	.+6      	; 0x2c8 <__stack+0x69>
+ 2c2:	82 30       	cpi	r24, 0x02	; 2
+ 2c4:	c1 f0       	breq	.+48     	; 0x2f6 <__stack+0x97>
+ 2c6:	25 c0       	rjmp	.+74     	; 0x312 <__stack+0xb3>
+		{
+		case MAX_CHARGING:
+			if (brightness_1 > 0)
+ 2c8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2cc:	88 23       	and	r24, r24
+ 2ce:	09 f1       	breq	.+66     	; 0x312 <__stack+0xb3>
+			{
+				brightness_1 --;
+ 2d0:	81 50       	subi	r24, 0x01	; 1
+ 2d2:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2d6:	1d c0       	rjmp	.+58     	; 0x312 <__stack+0xb3>
+			}
+			break;
+			
+		case NORMAL_WORK:
+			if(brightness_1 < 240)
+ 2d8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2dc:	80 3f       	cpi	r24, 0xF0	; 240
+ 2de:	18 f4       	brcc	.+6      	; 0x2e6 <__stack+0x87>
+			{
+				brightness_1 += 5;
+ 2e0:	8b 5f       	subi	r24, 0xFB	; 251
+ 2e2:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}
+			if (brightness_1 < 255)
+ 2e6:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2ea:	8f 3f       	cpi	r24, 0xFF	; 255
+ 2ec:	91 f0       	breq	.+36     	; 0x312 <__stack+0xb3>
+			{
+				brightness_1 ++;
+ 2ee:	8f 5f       	subi	r24, 0xFF	; 255
+ 2f0:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2f4:	0e c0       	rjmp	.+28     	; 0x312 <__stack+0xb3>
+			}			
+			break;
+			
+		case MAX_DISCHARGING:
+			if(brightness_1 < 230)
+ 2f6:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 2fa:	86 3e       	cpi	r24, 0xE6	; 230
+ 2fc:	18 f4       	brcc	.+6      	; 0x304 <__stack+0xa5>
+			{
+				brightness_1 += 20;
+ 2fe:	8c 5e       	subi	r24, 0xEC	; 236
+ 300:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}
+			if (brightness_1 < 255)
+ 304:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 308:	8f 3f       	cpi	r24, 0xFF	; 255
+ 30a:	19 f0       	breq	.+6      	; 0x312 <__stack+0xb3>
+			{
+				brightness_1 ++;
+ 30c:	8f 5f       	subi	r24, 0xFF	; 255
+ 30e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}			
+			break;
+		}
+		
+		division_result = current_difference_battery_voltage / previous_difference_battery_voltage;
+ 312:	81 2f       	mov	r24, r17
+ 314:	6c 2f       	mov	r22, r28
+ 316:	53 d2       	rcall	.+1190   	; 0x7be <__udivmodqi4>
+ 318:	28 2f       	mov	r18, r24
+			
+		max_multiplication_value = 255 / division_result;
+ 31a:	68 2f       	mov	r22, r24
+ 31c:	70 e0       	ldi	r23, 0x00	; 0
+ 31e:	8f ef       	ldi	r24, 0xFF	; 255
+ 320:	90 e0       	ldi	r25, 0x00	; 0
+ 322:	6d d2       	rcall	.+1242   	; 0x7fe <__divmodhi4>
+		if (max_multiplication_value >= brightness_1)    // check if value is lowe than 255
+ 324:	90 91 60 00 	lds	r25, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 328:	69 17       	cp	r22, r25
+ 32a:	30 f0       	brcs	.+12     	; 0x338 <__stack+0xd9>
+		{
+			brightness_1 = brightness_1 * division_result;
+ 32c:	82 2f       	mov	r24, r18
+ 32e:	69 2f       	mov	r22, r25
+ 330:	2c d2       	rcall	.+1112   	; 0x78a <__mulqi3>
+ 332:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 336:	58 c0       	rjmp	.+176    	; 0x3e8 <__stack+0x189>
+		}
+		else
+		{
+			brightness_1 = 255;
+ 338:	8f ef       	ldi	r24, 0xFF	; 255
+ 33a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 33e:	54 c0       	rjmp	.+168    	; 0x3e8 <__stack+0x189>
+		}
+		
+	}
+	else               // today battery voltage is lower than yesterday
+	{
+		led_r_on();              // led signal
+ 340:	8a de       	rcall	.-748    	; 0x56 <led_r_on>
+ 342:	97 e7       	ldi	r25, 0x77	; 119
+ 344:	ec e0       	ldi	r30, 0x0C	; 12
+ 346:	f3 e0       	ldi	r31, 0x03	; 3
+ 348:	91 50       	subi	r25, 0x01	; 1
+ 34a:	e0 40       	sbci	r30, 0x00	; 0
+ 34c:	f0 40       	sbci	r31, 0x00	; 0
+ 34e:	e1 f7       	brne	.-8      	; 0x348 <__stack+0xe9>
+ 350:	00 c0       	rjmp	.+0      	; 0x352 <__stack+0xf3>
+ 352:	00 00       	nop
+		_delay_ms(999);
+		led_r_off();
+ 354:	84 de       	rcall	.-760    	; 0x5e <led_r_off>
+		
+		division_result = previous_difference_battery_voltage / current_difference_battery_voltage;
+ 356:	8c 2f       	mov	r24, r28
+ 358:	61 2f       	mov	r22, r17
+ 35a:	31 d2       	rcall	.+1122   	; 0x7be <__udivmodqi4>
+ 35c:	68 2f       	mov	r22, r24
+		brightness_1 = brightness_1 / division_result;
+ 35e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 362:	2d d2       	rcall	.+1114   	; 0x7be <__udivmodqi4>
+ 364:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		if (brightness_1 > 0)
+ 368:	88 23       	and	r24, r24
+ 36a:	19 f0       	breq	.+6      	; 0x372 <__stack+0x113>
+		{
+			brightness_1 --;
+ 36c:	81 50       	subi	r24, 0x01	; 1
+ 36e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		}
+		if (prev_bat_status == DISCHARGED)
+ 372:	21 e0       	ldi	r18, 0x01	; 1
+ 374:	f2 12       	cpse	r15, r18
+ 376:	19 c0       	rjmp	.+50     	; 0x3aa <__stack+0x14b>
+		{
+			led_r_on();
+ 378:	6e de       	rcall	.-804    	; 0x56 <led_r_on>
+ 37a:	87 eb       	ldi	r24, 0xB7	; 183
+ 37c:	99 e1       	ldi	r25, 0x19	; 25
+ 37e:	e6 e0       	ldi	r30, 0x06	; 6
+ 380:	81 50       	subi	r24, 0x01	; 1
+ 382:	90 40       	sbci	r25, 0x00	; 0
+ 384:	e0 40       	sbci	r30, 0x00	; 0
+ 386:	e1 f7       	brne	.-8      	; 0x380 <__stack+0x121>
+ 388:	00 c0       	rjmp	.+0      	; 0x38a <__stack+0x12b>
+ 38a:	00 00       	nop
+			_delay_ms(1999);
+			led_r_off();
+ 38c:	68 de       	rcall	.-816    	; 0x5e <led_r_off>
+			if (brightness_1 >= 15)
+ 38e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 392:	8f 30       	cpi	r24, 0x0F	; 15
+ 394:	18 f0       	brcs	.+6      	; 0x39c <__stack+0x13d>
+			{
+				brightness_1 -= 5;
+ 396:	85 50       	subi	r24, 0x05	; 5
+ 398:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}
+			if (brightness_1 > 0)
+ 39c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3a0:	88 23       	and	r24, r24
+ 3a2:	19 f0       	breq	.+6      	; 0x3aa <__stack+0x14b>
+			{
+				brightness_1 --;
+ 3a4:	81 50       	subi	r24, 0x01	; 1
+ 3a6:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}
+
+		}
+		
+		switch (cycle_battery)
+ 3aa:	80 91 69 00 	lds	r24, 0x0069	; 0x800069 <cycle_battery.1807>
+ 3ae:	81 30       	cpi	r24, 0x01	; 1
+ 3b0:	61 f0       	breq	.+24     	; 0x3ca <__stack+0x16b>
+ 3b2:	18 f0       	brcs	.+6      	; 0x3ba <__stack+0x15b>
+ 3b4:	82 30       	cpi	r24, 0x02	; 2
+ 3b6:	89 f0       	breq	.+34     	; 0x3da <__stack+0x17b>
+ 3b8:	17 c0       	rjmp	.+46     	; 0x3e8 <__stack+0x189>
+		{
+		case MAX_CHARGING:
+			if (brightness_1 > 0)
+ 3ba:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3be:	88 23       	and	r24, r24
+ 3c0:	99 f0       	breq	.+38     	; 0x3e8 <__stack+0x189>
+			{
+				brightness_1 = brightness_1 / 2;
+ 3c2:	86 95       	lsr	r24
+ 3c4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3c8:	0f c0       	rjmp	.+30     	; 0x3e8 <__stack+0x189>
+			}
+			break;
+		case NORMAL_WORK:
+			if (brightness_1 > 0)
+ 3ca:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3ce:	88 23       	and	r24, r24
+ 3d0:	59 f0       	breq	.+22     	; 0x3e8 <__stack+0x189>
+			{
+				brightness_1 --;
+ 3d2:	81 50       	subi	r24, 0x01	; 1
+ 3d4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3d8:	07 c0       	rjmp	.+14     	; 0x3e8 <__stack+0x189>
+			}
+			break;	
+		case MAX_DISCHARGING:
+			if (brightness_1 > 0)
+ 3da:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3de:	88 23       	and	r24, r24
+ 3e0:	19 f0       	breq	.+6      	; 0x3e8 <__stack+0x189>
+			{
+				brightness_1 ++;
+ 3e2:	8f 5f       	subi	r24, 0xFF	; 255
+ 3e4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+			}			
+		}
+	}
+	
+	previous_battery_voltage = current_battery_voltage;
+ 3e8:	d0 93 6b 00 	sts	0x006B, r29	; 0x80006b <previous_battery_voltage.1805>
+	return brightness_1;
+}
+ 3ec:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 3f0:	df 91       	pop	r29
+ 3f2:	cf 91       	pop	r28
+ 3f4:	1f 91       	pop	r17
+ 3f6:	0f 91       	pop	r16
+ 3f8:	ff 90       	pop	r15
+ 3fa:	08 95       	ret
+
+000003fc <battery_protection>:
+
+uint8_t battery_protection (uint8_t minimum_battery_voltage, uint8_t lamp_status_1)   // the function protect batteries from deep discharge
+{
+ 3fc:	1f 93       	push	r17
+ 3fe:	cf 93       	push	r28
+ 400:	df 93       	push	r29
+ 402:	d8 2f       	mov	r29, r24
+ 404:	16 2f       	mov	r17, r22
+	uint8_t current_battery_voltage = 0;
+	uint8_t protection_status = 0;
+	
+	
+	
+	current_battery_voltage = adc_battery_measure();
+ 406:	61 de       	rcall	.-830    	; 0xca <adc_battery_measure>
+ 408:	c8 2f       	mov	r28, r24
+	if(previous_battery_voltage == 0)
+ 40a:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <previous_battery_voltage.1837>
+ 40e:	81 11       	cpse	r24, r1
+ 410:	02 c0       	rjmp	.+4      	; 0x416 <__LOCK_REGION_LENGTH__+0x16>
+	{
+		previous_battery_voltage = current_battery_voltage;
+ 412:	c0 93 68 00 	sts	0x0068, r28	; 0x800068 <previous_battery_voltage.1837>
+	}
+	timer_voltage_drop ++;
+ 416:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <timer_voltage_drop.1834>
+ 41a:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 41e:	01 96       	adiw	r24, 0x01	; 1
+ 420:	90 93 67 00 	sts	0x0067, r25	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 424:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <timer_voltage_drop.1834>
+	
+	if (current_battery_voltage < minimum_battery_voltage)    // actual battery voltage must be higher  than minimum battery voltage else battery is discharged
+ 428:	cd 17       	cp	r28, r29
+ 42a:	70 f4       	brcc	.+28     	; 0x448 <__LOCK_REGION_LENGTH__+0x48>
+	{
+		protection_status = DISCHARGED;
+		confirmation = 0;
+ 42c:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <confirmation.1836>
+		longest_time_voltage_drop = 0;
+ 430:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <longest_time_voltage_drop.1835+0x1>
+ 434:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <longest_time_voltage_drop.1835>
+		timer_voltage_drop = 0;
+ 438:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 43c:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <timer_voltage_drop.1834>
+		previous_battery_voltage = 0;
+ 440:	10 92 68 00 	sts	0x0068, r1	; 0x800068 <previous_battery_voltage.1837>
+	}
+	timer_voltage_drop ++;
+	
+	if (current_battery_voltage < minimum_battery_voltage)    // actual battery voltage must be higher  than minimum battery voltage else battery is discharged
+	{
+		protection_status = DISCHARGED;
+ 444:	d1 e0       	ldi	r29, 0x01	; 1
+ 446:	01 c0       	rjmp	.+2      	; 0x44a <__LOCK_REGION_LENGTH__+0x4a>
+	static uint16_t timer_voltage_drop = 0;
+	static uint16_t longest_time_voltage_drop = 0;
+	static uint8_t confirmation = 0;
+	static uint8_t previous_battery_voltage = 0;
+	uint8_t current_battery_voltage = 0;
+	uint8_t protection_status = 0;
+ 448:	d0 e0       	ldi	r29, 0x00	; 0
+		timer_voltage_drop = 0;
+		previous_battery_voltage = 0;
+		
+	}
+	
+	if (lamp_status_1 == WAIT)
+ 44a:	11 30       	cpi	r17, 0x01	; 1
+ 44c:	09 f0       	breq	.+2      	; 0x450 <__LOCK_REGION_LENGTH__+0x50>
+ 44e:	51 c0       	rjmp	.+162    	; 0x4f2 <__LOCK_REGION_LENGTH__+0xf2>
+	{
+		protection_status = OK;
+		confirmation = 0;
+ 450:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <confirmation.1836>
+		longest_time_voltage_drop = 0;
+ 454:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <longest_time_voltage_drop.1835+0x1>
+ 458:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <longest_time_voltage_drop.1835>
+		timer_voltage_drop = 0;
+ 45c:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 460:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <timer_voltage_drop.1834>
+		
+	}
+	
+	if (lamp_status_1 == WAIT)
+	{
+		protection_status = OK;
+ 464:	d0 e0       	ldi	r29, 0x00	; 0
+ 466:	45 c0       	rjmp	.+138    	; 0x4f2 <__LOCK_REGION_LENGTH__+0xf2>
+
+
+
+	while (current_battery_voltage < previous_battery_voltage)   // control voltage drop
+	{
+		previous_battery_voltage = current_battery_voltage;   // update battery voltage
+ 468:	c0 93 68 00 	sts	0x0068, r28	; 0x800068 <previous_battery_voltage.1837>
+		if (timer_voltage_drop > longest_time_voltage_drop)    // update longest time voltage drop
+ 46c:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <timer_voltage_drop.1834>
+ 470:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 474:	80 91 63 00 	lds	r24, 0x0063	; 0x800063 <longest_time_voltage_drop.1835>
+ 478:	90 91 64 00 	lds	r25, 0x0064	; 0x800064 <longest_time_voltage_drop.1835+0x1>
+ 47c:	86 17       	cp	r24, r22
+ 47e:	97 07       	cpc	r25, r23
+ 480:	98 f4       	brcc	.+38     	; 0x4a8 <__LOCK_REGION_LENGTH__+0xa8>
+		{
+			longest_time_voltage_drop = timer_voltage_drop;   // update
+ 482:	70 93 64 00 	sts	0x0064, r23	; 0x800064 <longest_time_voltage_drop.1835+0x1>
+ 486:	60 93 63 00 	sts	0x0063, r22	; 0x800063 <longest_time_voltage_drop.1835>
+			timer_voltage_drop = 0;
+ 48a:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 48e:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <timer_voltage_drop.1834>
+			confirmation = 0;
+ 492:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <confirmation.1836>
+			led_r_on();
+ 496:	df dd       	rcall	.-1090   	; 0x56 <led_r_on>
+ 498:	87 ea       	ldi	r24, 0xA7	; 167
+ 49a:	91 e6       	ldi	r25, 0x61	; 97
+ 49c:	01 97       	sbiw	r24, 0x01	; 1
+ 49e:	f1 f7       	brne	.-4      	; 0x49c <__LOCK_REGION_LENGTH__+0x9c>
+ 4a0:	00 c0       	rjmp	.+0      	; 0x4a2 <__LOCK_REGION_LENGTH__+0xa2>
+ 4a2:	00 00       	nop
+			_delay_ms(100);
+			led_r_off();
+ 4a4:	dc dd       	rcall	.-1096   	; 0x5e <led_r_off>
+ 4a6:	25 c0       	rjmp	.+74     	; 0x4f2 <__LOCK_REGION_LENGTH__+0xf2>
+		}
+		else
+		{
+			
+			if (longest_time_voltage_drop / timer_voltage_drop >= 4)     // checks if the voltage drops 4 times faster
+ 4a8:	96 d1       	rcall	.+812    	; 0x7d6 <__udivmodhi4>
+ 4aa:	64 30       	cpi	r22, 0x04	; 4
+ 4ac:	71 05       	cpc	r23, r1
+ 4ae:	80 f0       	brcs	.+32     	; 0x4d0 <__LOCK_REGION_LENGTH__+0xd0>
+			{
+				confirmation ++;
+ 4b0:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <confirmation.1836>
+ 4b4:	8f 5f       	subi	r24, 0xFF	; 255
+ 4b6:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <confirmation.1836>
+				led_r_on();
+ 4ba:	cd dd       	rcall	.-1126   	; 0x56 <led_r_on>
+ 4bc:	9f e9       	ldi	r25, 0x9F	; 159
+ 4be:	26 e8       	ldi	r18, 0x86	; 134
+ 4c0:	81 e0       	ldi	r24, 0x01	; 1
+ 4c2:	91 50       	subi	r25, 0x01	; 1
+ 4c4:	20 40       	sbci	r18, 0x00	; 0
+ 4c6:	80 40       	sbci	r24, 0x00	; 0
+ 4c8:	e1 f7       	brne	.-8      	; 0x4c2 <__LOCK_REGION_LENGTH__+0xc2>
+ 4ca:	00 c0       	rjmp	.+0      	; 0x4cc <__LOCK_REGION_LENGTH__+0xcc>
+ 4cc:	00 00       	nop
+				_delay_ms(500);
+				led_r_off();
+ 4ce:	c7 dd       	rcall	.-1138   	; 0x5e <led_r_off>
+			}
+			if (confirmation >= 2)  // confirmation of the fulfillment of the above condition
+ 4d0:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <confirmation.1836>
+ 4d4:	82 30       	cpi	r24, 0x02	; 2
+ 4d6:	48 f0       	brcs	.+18     	; 0x4ea <__LOCK_REGION_LENGTH__+0xea>
+			{
+				protection_status = 1;
+				confirmation = 0;
+ 4d8:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <confirmation.1836>
+				longest_time_voltage_drop = 0;
+ 4dc:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <longest_time_voltage_drop.1835+0x1>
+ 4e0:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <longest_time_voltage_drop.1835>
+				previous_battery_voltage = 0;	
+ 4e4:	10 92 68 00 	sts	0x0068, r1	; 0x800068 <previous_battery_voltage.1837>
+				_delay_ms(500);
+				led_r_off();
+			}
+			if (confirmation >= 2)  // confirmation of the fulfillment of the above condition
+			{
+				protection_status = 1;
+ 4e8:	d1 e0       	ldi	r29, 0x01	; 1
+				confirmation = 0;
+				longest_time_voltage_drop = 0;
+				previous_battery_voltage = 0;	
+			}
+			timer_voltage_drop = 0;
+ 4ea:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <timer_voltage_drop.1834+0x1>
+ 4ee:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <timer_voltage_drop.1834>
+		timer_voltage_drop = 0;
+	}
+
+
+
+	while (current_battery_voltage < previous_battery_voltage)   // control voltage drop
+ 4f2:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <previous_battery_voltage.1837>
+ 4f6:	c8 17       	cp	r28, r24
+ 4f8:	08 f4       	brcc	.+2      	; 0x4fc <__LOCK_REGION_LENGTH__+0xfc>
+ 4fa:	b6 cf       	rjmp	.-148    	; 0x468 <__LOCK_REGION_LENGTH__+0x68>
+			timer_voltage_drop = 0;
+		}
+	}
+	return protection_status;
+
+}
+ 4fc:	8d 2f       	mov	r24, r29
+ 4fe:	df 91       	pop	r29
+ 500:	cf 91       	pop	r28
+ 502:	1f 91       	pop	r17
+ 504:	08 95       	ret
+
+00000506 <charge_signal>:
+
+void charge_signal (uint8_t maximum_battery_voltage, uint8_t lamp_stat)      // led signal
+{
+ 506:	cf 93       	push	r28
+ 508:	df 93       	push	r29
+ 50a:	c8 2f       	mov	r28, r24
+ 50c:	d6 2f       	mov	r29, r22
+	uint8_t current_battery_voltage = 0;
+	uint8_t loop_counter = 0;
+	static uint8_t start_charge_battery_voltage = 0;     //  battery voltage at the start of the charge cycle
+	OCR0B = 255;
+ 50e:	8f ef       	ldi	r24, 0xFF	; 255
+ 510:	88 bd       	out	0x28, r24	; 40
+	
+	current_battery_voltage = adc_battery_measure();
+ 512:	db dd       	rcall	.-1098   	; 0xca <adc_battery_measure>
+	if(lamp_stat != CHARGE)
+ 514:	d1 11       	cpse	r29, r1
+	{
+		start_charge_battery_voltage = current_battery_voltage;
+ 516:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <__data_end>
+	}
+	
+
+	if(start_charge_battery_voltage < current_battery_voltage && current_battery_voltage < maximum_battery_voltage)     
+ 51a:	90 91 62 00 	lds	r25, 0x0062	; 0x800062 <__data_end>
+ 51e:	98 17       	cp	r25, r24
+ 520:	80 f5       	brcc	.+96     	; 0x582 <charge_signal+0x7c>
+ 522:	8c 17       	cp	r24, r28
+ 524:	a8 f0       	brcs	.+42     	; 0x550 <charge_signal+0x4a>
+ 526:	2d c0       	rjmp	.+90     	; 0x582 <charge_signal+0x7c>
+ 528:	e9 ef       	ldi	r30, 0xF9	; 249
+ 52a:	f0 e0       	ldi	r31, 0x00	; 0
+ 52c:	31 97       	sbiw	r30, 0x01	; 1
+ 52e:	f1 f7       	brne	.-4      	; 0x52c <charge_signal+0x26>
+ 530:	00 c0       	rjmp	.+0      	; 0x532 <charge_signal+0x2c>
+ 532:	00 00       	nop
+	{
+		for (loop_counter = 255; loop_counter > 0; loop_counter --)     // led signal
+		{
+			_delay_ms(1);
+			if (OCR0B < 50)
+ 534:	28 b5       	in	r18, 0x28	; 40
+ 536:	22 33       	cpi	r18, 0x32	; 50
+ 538:	30 f4       	brcc	.+12     	; 0x546 <charge_signal+0x40>
+ 53a:	e9 ef       	ldi	r30, 0xF9	; 249
+ 53c:	f0 e0       	ldi	r31, 0x00	; 0
+ 53e:	31 97       	sbiw	r30, 0x01	; 1
+ 540:	f1 f7       	brne	.-4      	; 0x53e <charge_signal+0x38>
+ 542:	00 c0       	rjmp	.+0      	; 0x544 <charge_signal+0x3e>
+ 544:	00 00       	nop
+			{
+				_delay_ms(1);
+			}
+			OCR0B --;
+ 546:	28 b5       	in	r18, 0x28	; 40
+ 548:	21 50       	subi	r18, 0x01	; 1
+ 54a:	28 bd       	out	0x28, r18	; 40
+	}
+	
+
+	if(start_charge_battery_voltage < current_battery_voltage && current_battery_voltage < maximum_battery_voltage)     
+	{
+		for (loop_counter = 255; loop_counter > 0; loop_counter --)     // led signal
+ 54c:	91 50       	subi	r25, 0x01	; 1
+ 54e:	01 c0       	rjmp	.+2      	; 0x552 <charge_signal+0x4c>
+ 550:	9f ef       	ldi	r25, 0xFF	; 255
+ 552:	91 11       	cpse	r25, r1
+ 554:	e9 cf       	rjmp	.-46     	; 0x528 <charge_signal+0x22>
+ 556:	13 c0       	rjmp	.+38     	; 0x57e <charge_signal+0x78>
+ 558:	e9 ef       	ldi	r30, 0xF9	; 249
+ 55a:	f0 e0       	ldi	r31, 0x00	; 0
+ 55c:	31 97       	sbiw	r30, 0x01	; 1
+ 55e:	f1 f7       	brne	.-4      	; 0x55c <charge_signal+0x56>
+ 560:	00 c0       	rjmp	.+0      	; 0x562 <charge_signal+0x5c>
+ 562:	00 00       	nop
+			OCR0B --;
+		}
+		for (loop_counter = 0; loop_counter < 255; loop_counter ++) // led signal
+		{
+			_delay_ms(1);
+			if (OCR0B < 50)
+ 564:	28 b5       	in	r18, 0x28	; 40
+ 566:	22 33       	cpi	r18, 0x32	; 50
+ 568:	30 f4       	brcc	.+12     	; 0x576 <charge_signal+0x70>
+ 56a:	e9 ef       	ldi	r30, 0xF9	; 249
+ 56c:	f0 e0       	ldi	r31, 0x00	; 0
+ 56e:	31 97       	sbiw	r30, 0x01	; 1
+ 570:	f1 f7       	brne	.-4      	; 0x56e <charge_signal+0x68>
+ 572:	00 c0       	rjmp	.+0      	; 0x574 <charge_signal+0x6e>
+ 574:	00 00       	nop
+			{
+				_delay_ms(1);
+			}
+			OCR0B ++;
+ 576:	28 b5       	in	r18, 0x28	; 40
+ 578:	2f 5f       	subi	r18, 0xFF	; 255
+ 57a:	28 bd       	out	0x28, r18	; 40
+			{
+				_delay_ms(1);
+			}
+			OCR0B --;
+		}
+		for (loop_counter = 0; loop_counter < 255; loop_counter ++) // led signal
+ 57c:	9f 5f       	subi	r25, 0xFF	; 255
+ 57e:	9f 3f       	cpi	r25, 0xFF	; 255
+ 580:	59 f7       	brne	.-42     	; 0x558 <charge_signal+0x52>
+			}
+			OCR0B ++;
+		}
+	}
+		
+	if (current_battery_voltage >= maximum_battery_voltage)
+ 582:	8c 17       	cp	r24, r28
+ 584:	08 f0       	brcs	.+2      	; 0x588 <charge_signal+0x82>
+	{
+		OCR0B = 0;
+ 586:	18 bc       	out	0x28, r1	; 40
+	}
+	
+}
+ 588:	df 91       	pop	r29
+ 58a:	cf 91       	pop	r28
+ 58c:	08 95       	ret
+
+0000058e <wait_signal>:
+
+void wait_signal(void)   // led signal
+{
+	led_r_on();
+ 58e:	63 dd       	rcall	.-1338   	; 0x56 <led_r_on>
+	OCR0B = 0;
+ 590:	18 bc       	out	0x28, r1	; 40
+ 592:	87 e8       	ldi	r24, 0x87	; 135
+ 594:	93 e1       	ldi	r25, 0x13	; 19
+ 596:	01 97       	sbiw	r24, 0x01	; 1
+ 598:	f1 f7       	brne	.-4      	; 0x596 <wait_signal+0x8>
+ 59a:	00 c0       	rjmp	.+0      	; 0x59c <wait_signal+0xe>
+ 59c:	00 00       	nop
+	_delay_ms(20);
+	led_r_off();
+ 59e:	5f dd       	rcall	.-1346   	; 0x5e <led_r_off>
+	OCR0B = 255;
+ 5a0:	8f ef       	ldi	r24, 0xFF	; 255
+ 5a2:	88 bd       	out	0x28, r24	; 40
+ 5a4:	08 95       	ret
+
+000005a6 <zero_brightness_signal>:
+}
+
+void zero_brightness_signal(void)    // led signal
+{
+	led_r_on();
+ 5a6:	57 dd       	rcall	.-1362   	; 0x56 <led_r_on>
+ 5a8:	2f e9       	ldi	r18, 0x9F	; 159
+ 5aa:	86 e8       	ldi	r24, 0x86	; 134
+ 5ac:	91 e0       	ldi	r25, 0x01	; 1
+ 5ae:	21 50       	subi	r18, 0x01	; 1
+ 5b0:	80 40       	sbci	r24, 0x00	; 0
+ 5b2:	90 40       	sbci	r25, 0x00	; 0
+ 5b4:	e1 f7       	brne	.-8      	; 0x5ae <zero_brightness_signal+0x8>
+ 5b6:	00 c0       	rjmp	.+0      	; 0x5b8 <zero_brightness_signal+0x12>
+ 5b8:	00 00       	nop
+	_delay_ms(500);
+	led_r_off();
+ 5ba:	51 dd       	rcall	.-1374   	; 0x5e <led_r_off>
+ 5bc:	2f e9       	ldi	r18, 0x9F	; 159
+ 5be:	86 e8       	ldi	r24, 0x86	; 134
+ 5c0:	91 e0       	ldi	r25, 0x01	; 1
+ 5c2:	21 50       	subi	r18, 0x01	; 1
+ 5c4:	80 40       	sbci	r24, 0x00	; 0
+ 5c6:	90 40       	sbci	r25, 0x00	; 0
+ 5c8:	e1 f7       	brne	.-8      	; 0x5c2 <zero_brightness_signal+0x1c>
+ 5ca:	00 c0       	rjmp	.+0      	; 0x5cc <zero_brightness_signal+0x26>
+ 5cc:	00 00       	nop
+ 5ce:	08 95       	ret
+
+000005d0 <battery_discharged_signal>:
+	_delay_ms(500);
+}
+
+void battery_discharged_signal(void)    // led signal
+{
+ 5d0:	cf 93       	push	r28
+	uint8_t loop_counter = 0;
+	for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+ 5d2:	c0 e0       	ldi	r28, 0x00	; 0
+ 5d4:	0f c0       	rjmp	.+30     	; 0x5f4 <battery_discharged_signal+0x24>
+	{
+		led_r_on();
+ 5d6:	3f dd       	rcall	.-1410   	; 0x56 <led_r_on>
+ 5d8:	89 e6       	ldi	r24, 0x69	; 105
+ 5da:	98 e1       	ldi	r25, 0x18	; 24
+ 5dc:	01 97       	sbiw	r24, 0x01	; 1
+ 5de:	f1 f7       	brne	.-4      	; 0x5dc <battery_discharged_signal+0xc>
+ 5e0:	00 c0       	rjmp	.+0      	; 0x5e2 <battery_discharged_signal+0x12>
+ 5e2:	00 00       	nop
+		_delay_ms(25);
+		led_r_off();
+ 5e4:	3c dd       	rcall	.-1416   	; 0x5e <led_r_off>
+ 5e6:	8d e2       	ldi	r24, 0x2D	; 45
+ 5e8:	92 e2       	ldi	r25, 0x22	; 34
+ 5ea:	01 97       	sbiw	r24, 0x01	; 1
+ 5ec:	f1 f7       	brne	.-4      	; 0x5ea <battery_discharged_signal+0x1a>
+ 5ee:	00 c0       	rjmp	.+0      	; 0x5f0 <battery_discharged_signal+0x20>
+ 5f0:	00 00       	nop
+}
+
+void battery_discharged_signal(void)    // led signal
+{
+	uint8_t loop_counter = 0;
+	for (loop_counter = 0; loop_counter < 8; loop_counter ++)
+ 5f2:	cf 5f       	subi	r28, 0xFF	; 255
+ 5f4:	c8 30       	cpi	r28, 0x08	; 8
+ 5f6:	78 f3       	brcs	.-34     	; 0x5d6 <battery_discharged_signal+0x6>
+		_delay_ms(25);
+		led_r_off();
+		_delay_ms(35);
+
+	}
+}
+ 5f8:	cf 91       	pop	r28
+ 5fa:	08 95       	ret
+
+000005fc <__vector_3>:
+
+
+
+
+ISR(TIMER1_COMPA_vect)  // INTERRUPT
+{
+ 5fc:	1f 92       	push	r1
+ 5fe:	0f 92       	push	r0
+ 600:	0f b6       	in	r0, 0x3f	; 63
+ 602:	0f 92       	push	r0
+ 604:	11 24       	eor	r1, r1
+ 606:	8f 93       	push	r24
+ 608:	9f 93       	push	r25
+	global_timer ++;
+ 60a:	80 91 73 00 	lds	r24, 0x0073	; 0x800073 <global_timer>
+ 60e:	90 91 74 00 	lds	r25, 0x0074	; 0x800074 <global_timer+0x1>
+ 612:	01 96       	adiw	r24, 0x01	; 1
+ 614:	90 93 74 00 	sts	0x0074, r25	; 0x800074 <global_timer+0x1>
+ 618:	80 93 73 00 	sts	0x0073, r24	; 0x800073 <global_timer>
+}
+ 61c:	9f 91       	pop	r25
+ 61e:	8f 91       	pop	r24
+ 620:	0f 90       	pop	r0
+ 622:	0f be       	out	0x3f, r0	; 63
+ 624:	0f 90       	pop	r0
+ 626:	1f 90       	pop	r1
+ 628:	18 95       	reti
+
+0000062a <wait_for_interrupt>:
+
+void wait_for_interrupt (void)
+{
+	static uint16_t timer;
+	global_timer = timer;
+ 62a:	10 92 74 00 	sts	0x0074, r1	; 0x800074 <global_timer+0x1>
+ 62e:	10 92 73 00 	sts	0x0073, r1	; 0x800073 <global_timer>
+	while(global_timer == timer);   // wait for change value of global timer
+ 632:	80 91 73 00 	lds	r24, 0x0073	; 0x800073 <global_timer>
+ 636:	90 91 74 00 	lds	r25, 0x0074	; 0x800074 <global_timer+0x1>
+ 63a:	89 2b       	or	r24, r25
+ 63c:	d1 f3       	breq	.-12     	; 0x632 <wait_for_interrupt+0x8>
+}
+ 63e:	08 95       	ret
+
+00000640 <main>:
+
+
+int main(void)
+{
+	DDRB = 0b010011;	
+ 640:	83 e1       	ldi	r24, 0x13	; 19
+ 642:	87 bb       	out	0x17, r24	; 23
+	//PB4-output-LED_R,                  OUT
+	//PB3-input-Battery_measure          ADC3
+	//PB2-input-SolarCell_measure        ADC1
+	//PB1-output-LED_G                   OCR0B
+	//PB0-output-PWM_OUT                 OCR0A
+	PORTB  = 0x00;
+ 644:	18 ba       	out	0x18, r1	; 24
+	
+	/* Replace with your application code */
+	
+	init_timer1();
+ 646:	0f dd       	rcall	.-1506   	; 0x66 <init_timer1>
+	sei();       // enable interrupt
+ 648:	78 94       	sei
+	pwm_setup();
+ 64a:	19 dd       	rcall	.-1486   	; 0x7e <pwm_setup>
+__attribute__ ((__always_inline__))
+void wdt_enable (const uint8_t value)
+{
+	if (_SFR_IO_REG_P (_WD_CONTROL_REG))
+	{
+		__asm__ __volatile__ (
+ 64c:	98 e2       	ldi	r25, 0x28	; 40
+ 64e:	88 e1       	ldi	r24, 0x18	; 24
+ 650:	0f b6       	in	r0, 0x3f	; 63
+ 652:	f8 94       	cli
+ 654:	a8 95       	wdr
+ 656:	81 bd       	out	0x21, r24	; 33
+ 658:	0f be       	out	0x3f, r0	; 63
+ 65a:	91 bd       	out	0x21, r25	; 33
+	while (1)
+	{
+		uint8_t current_battery_voltage = 0;
+		uint8_t current_solar_voltage = 0;
+		
+		current_battery_voltage = adc_battery_measure();
+ 65c:	36 dd       	rcall	.-1428   	; 0xca <adc_battery_measure>
+ 65e:	c8 2f       	mov	r28, r24
+		current_solar_voltage = adc_solar_measure();
+ 660:	1e dd       	rcall	.-1476   	; 0x9e <adc_solar_measure>
+ 662:	d8 2f       	mov	r29, r24
+		
+		while (current_solar_voltage >= current_battery_voltage) // morning, afternoon, charging time
+ 664:	1c c0       	rjmp	.+56     	; 0x69e <main+0x5e>
+		{
+			charge_signal(max_battery_voltage, lamp_status);
+ 666:	60 91 6d 00 	lds	r22, 0x006D	; 0x80006d <lamp_status>
+ 66a:	80 91 72 00 	lds	r24, 0x0072	; 0x800072 <max_battery_voltage>
+ 66e:	4b df       	rcall	.-362    	; 0x506 <charge_signal>
+			
+			current_battery_voltage = adc_battery_measure();
+ 670:	2c dd       	rcall	.-1448   	; 0xca <adc_battery_measure>
+ 672:	c8 2f       	mov	r28, r24
+			current_solar_voltage = adc_solar_measure();
+ 674:	14 dd       	rcall	.-1496   	; 0x9e <adc_solar_measure>
+ 676:	d8 2f       	mov	r29, r24
+			lamp_status = CHARGE;
+ 678:	10 92 6d 00 	sts	0x006D, r1	; 0x80006d <lamp_status>
+			battery_status = OK;
+ 67c:	10 92 70 00 	sts	0x0070, r1	; 0x800070 <battery_status>
+			wdt_reset();			// watchdog reset
+ 680:	a8 95       	wdr
+			wait_for_interrupt();
+ 682:	d3 df       	rcall	.-90     	; 0x62a <wait_for_interrupt>
+			
+			while (OCR0A <255)
+ 684:	09 c0       	rjmp	.+18     	; 0x698 <main+0x58>
+			{
+				OCR0A ++;
+ 686:	89 b5       	in	r24, 0x29	; 41
+ 688:	8f 5f       	subi	r24, 0xFF	; 255
+ 68a:	89 bd       	out	0x29, r24	; 41
+ 68c:	8d ee       	ldi	r24, 0xED	; 237
+ 68e:	92 e0       	ldi	r25, 0x02	; 2
+ 690:	01 97       	sbiw	r24, 0x01	; 1
+ 692:	f1 f7       	brne	.-4      	; 0x690 <main+0x50>
+ 694:	00 c0       	rjmp	.+0      	; 0x696 <main+0x56>
+ 696:	00 00       	nop
+			lamp_status = CHARGE;
+			battery_status = OK;
+			wdt_reset();			// watchdog reset
+			wait_for_interrupt();
+			
+			while (OCR0A <255)
+ 698:	89 b5       	in	r24, 0x29	; 41
+ 69a:	8f 3f       	cpi	r24, 0xFF	; 255
+ 69c:	a1 f7       	brne	.-24     	; 0x686 <main+0x46>
+		uint8_t current_solar_voltage = 0;
+		
+		current_battery_voltage = adc_battery_measure();
+		current_solar_voltage = adc_solar_measure();
+		
+		while (current_solar_voltage >= current_battery_voltage) // morning, afternoon, charging time
+ 69e:	dc 17       	cp	r29, r28
+ 6a0:	10 f7       	brcc	.-60     	; 0x666 <main+0x26>
+ 6a2:	6f c0       	rjmp	.+222    	; 0x782 <main+0x142>
+		while(current_solar_voltage < current_battery_voltage) // evening, night, morning - wait 
+		{
+			
+			while (current_solar_voltage < current_battery_voltage && current_battery_voltage / current_solar_voltage < 3)        // evening, wait for dark
+			{
+				lamp_status = WAIT;
+ 6a4:	81 e0       	ldi	r24, 0x01	; 1
+ 6a6:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <lamp_status>
+				wait_signal();   // led signal
+ 6aa:	71 df       	rcall	.-286    	; 0x58e <wait_signal>
+				wdt_reset();
+ 6ac:	a8 95       	wdr
+				wait_for_interrupt();
+ 6ae:	bd df       	rcall	.-134    	; 0x62a <wait_for_interrupt>
+				brightness = 0;
+ 6b0:	10 92 6e 00 	sts	0x006E, r1	; 0x80006e <brightness>
+				led_out_brightness(brightness, max_battery_voltage);
+ 6b4:	60 91 72 00 	lds	r22, 0x0072	; 0x800072 <max_battery_voltage>
+ 6b8:	80 e0       	ldi	r24, 0x00	; 0
+ 6ba:	1a dd       	rcall	.-1484   	; 0xf0 <led_out_brightness>
+				
+				current_battery_voltage = adc_battery_measure();
+ 6bc:	06 dd       	rcall	.-1524   	; 0xca <adc_battery_measure>
+ 6be:	c8 2f       	mov	r28, r24
+				current_solar_voltage = adc_solar_measure();
+ 6c0:	ee dc       	rcall	.-1572   	; 0x9e <adc_solar_measure>
+ 6c2:	d8 2f       	mov	r29, r24
+				
+				if (current_battery_voltage > max_battery_voltage)   // update max battery voltage
+ 6c4:	80 91 72 00 	lds	r24, 0x0072	; 0x800072 <max_battery_voltage>
+ 6c8:	8c 17       	cp	r24, r28
+ 6ca:	10 f4       	brcc	.+4      	; 0x6d0 <main+0x90>
+				{
+					max_battery_voltage = current_battery_voltage;
+ 6cc:	c0 93 72 00 	sts	0x0072, r28	; 0x800072 <max_battery_voltage>
+		}
+		
+		while(current_solar_voltage < current_battery_voltage) // evening, night, morning - wait 
+		{
+			
+			while (current_solar_voltage < current_battery_voltage && current_battery_voltage / current_solar_voltage < 3)        // evening, wait for dark
+ 6d0:	dc 17       	cp	r29, r28
+ 6d2:	08 f0       	brcs	.+2      	; 0x6d6 <main+0x96>
+ 6d4:	4e c0       	rjmp	.+156    	; 0x772 <main+0x132>
+ 6d6:	8c 2f       	mov	r24, r28
+ 6d8:	6d 2f       	mov	r22, r29
+ 6da:	71 d0       	rcall	.+226    	; 0x7be <__udivmodqi4>
+ 6dc:	83 30       	cpi	r24, 0x03	; 3
+ 6de:	10 f3       	brcs	.-60     	; 0x6a4 <main+0x64>
+ 6e0:	48 c0       	rjmp	.+144    	; 0x772 <main+0x132>
+
+			}
+			
+			while (current_solar_voltage < current_battery_voltage && current_battery_voltage / current_solar_voltage >= 3)        // night
+			{
+				current_battery_voltage = adc_battery_measure();
+ 6e2:	f3 dc       	rcall	.-1562   	; 0xca <adc_battery_measure>
+ 6e4:	c8 2f       	mov	r28, r24
+				current_solar_voltage = adc_solar_measure();
+ 6e6:	db dc       	rcall	.-1610   	; 0x9e <adc_solar_measure>
+ 6e8:	d8 2f       	mov	r29, r24
+				
+				if (current_solar_voltage > 10)      // the function eliminates flash effect
+ 6ea:	8b 30       	cpi	r24, 0x0B	; 11
+ 6ec:	08 f0       	brcs	.+2      	; 0x6f0 <main+0xb0>
+				{
+					current_solar_voltage -= 10;
+ 6ee:	da 50       	subi	r29, 0x0A	; 10
+				}
+				
+				OCR0B = 255;
+ 6f0:	8f ef       	ldi	r24, 0xFF	; 255
+ 6f2:	88 bd       	out	0x28, r24	; 40
+				wdt_reset();
+ 6f4:	a8 95       	wdr
+				wait_for_interrupt();
+ 6f6:	99 df       	rcall	.-206    	; 0x62a <wait_for_interrupt>
+
+				if (battery_status == OK )
+ 6f8:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <battery_status>
+ 6fc:	81 11       	cpse	r24, r1
+ 6fe:	22 c0       	rjmp	.+68     	; 0x744 <main+0x104>
+				{
+					if (lamp_status != LIGHT)
+ 700:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <lamp_status>
+ 704:	82 30       	cpi	r24, 0x02	; 2
+ 706:	49 f0       	breq	.+18     	; 0x71a <main+0xda>
+					{
+						brightness = regul_brightness(previous_battery_status, max_battery_voltage, min_battery_voltage);    // the function activates 1 time in 1 night
+ 708:	40 91 71 00 	lds	r20, 0x0071	; 0x800071 <min_battery_voltage>
+ 70c:	60 91 72 00 	lds	r22, 0x0072	; 0x800072 <max_battery_voltage>
+ 710:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <previous_battery_status>
+ 714:	48 dd       	rcall	.-1392   	; 0x1a6 <regul_brightness>
+ 716:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <brightness>
+					}
+					
+					lamp_status = LIGHT;
+ 71a:	82 e0       	ldi	r24, 0x02	; 2
+ 71c:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <lamp_status>
+					
+					if (brightness == 0)
+ 720:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <brightness>
+ 724:	81 11       	cpse	r24, r1
+ 726:	02 c0       	rjmp	.+4      	; 0x72c <main+0xec>
+					{
+						zero_brightness_signal();
+ 728:	3e df       	rcall	.-388    	; 0x5a6 <zero_brightness_signal>
+ 72a:	03 c0       	rjmp	.+6      	; 0x732 <main+0xf2>
+					} 
+					else
+					{
+						led_out_brightness(brightness, max_battery_voltage);
+ 72c:	60 91 72 00 	lds	r22, 0x0072	; 0x800072 <max_battery_voltage>
+ 730:	df dc       	rcall	.-1602   	; 0xf0 <led_out_brightness>
+					}
+					
+					battery_status = battery_protection(min_battery_voltage, lamp_status);
+ 732:	60 91 6d 00 	lds	r22, 0x006D	; 0x80006d <lamp_status>
+ 736:	80 91 71 00 	lds	r24, 0x0071	; 0x800071 <min_battery_voltage>
+ 73a:	60 de       	rcall	.-832    	; 0x3fc <battery_protection>
+ 73c:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <battery_status>
+					previous_battery_status = OK;
+ 740:	10 92 6f 00 	sts	0x006F, r1	; 0x80006f <previous_battery_status>
+				}
+				if (battery_status == DISCHARGED)
+ 744:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <battery_status>
+ 748:	81 30       	cpi	r24, 0x01	; 1
+ 74a:	99 f4       	brne	.+38     	; 0x772 <main+0x132>
+				{
+					
+					if (brightness > 0)    // update minimum battery voltage while led lamp lighting
+ 74c:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <brightness>
+ 750:	88 23       	and	r24, r24
+ 752:	19 f0       	breq	.+6      	; 0x75a <main+0x11a>
+					{
+						min_battery_voltage = adc_battery_measure();
+ 754:	ba dc       	rcall	.-1676   	; 0xca <adc_battery_measure>
+ 756:	80 93 71 00 	sts	0x0071, r24	; 0x800071 <min_battery_voltage>
+					}
+					lamp_status = WAIT;
+ 75a:	11 e0       	ldi	r17, 0x01	; 1
+ 75c:	10 93 6d 00 	sts	0x006D, r17	; 0x80006d <lamp_status>
+					
+					brightness = 0;
+ 760:	10 92 6e 00 	sts	0x006E, r1	; 0x80006e <brightness>
+					led_out_brightness(brightness, max_battery_voltage);
+ 764:	60 91 72 00 	lds	r22, 0x0072	; 0x800072 <max_battery_voltage>
+ 768:	80 e0       	ldi	r24, 0x00	; 0
+ 76a:	c2 dc       	rcall	.-1660   	; 0xf0 <led_out_brightness>
+					previous_battery_status = DISCHARGED;
+ 76c:	10 93 6f 00 	sts	0x006F, r17	; 0x80006f <previous_battery_status>
+					battery_discharged_signal();
+ 770:	2f df       	rcall	.-418    	; 0x5d0 <battery_discharged_signal>
+					max_battery_voltage = current_battery_voltage;
+				}
+
+			}
+			
+			while (current_solar_voltage < current_battery_voltage && current_battery_voltage / current_solar_voltage >= 3)        // night
+ 772:	dc 17       	cp	r29, r28
+ 774:	30 f4       	brcc	.+12     	; 0x782 <main+0x142>
+ 776:	8c 2f       	mov	r24, r28
+ 778:	6d 2f       	mov	r22, r29
+ 77a:	21 d0       	rcall	.+66     	; 0x7be <__udivmodqi4>
+ 77c:	83 30       	cpi	r24, 0x03	; 3
+ 77e:	08 f0       	brcs	.+2      	; 0x782 <main+0x142>
+ 780:	b0 cf       	rjmp	.-160    	; 0x6e2 <main+0xa2>
+				OCR0A ++;
+				_delay_ms(3);
+			}
+		}
+		
+		while(current_solar_voltage < current_battery_voltage) // evening, night, morning - wait 
+ 782:	dc 17       	cp	r29, r28
+ 784:	08 f4       	brcc	.+2      	; 0x788 <main+0x148>
+ 786:	a4 cf       	rjmp	.-184    	; 0x6d0 <main+0x90>
+ 788:	69 cf       	rjmp	.-302    	; 0x65c <main+0x1c>
+
+0000078a <__mulqi3>:
+ 78a:	00 24       	eor	r0, r0
+
+0000078c <__mulqi3_loop>:
+ 78c:	80 fd       	sbrc	r24, 0
+ 78e:	06 0e       	add	r0, r22
+ 790:	66 0f       	add	r22, r22
+ 792:	11 f0       	breq	.+4      	; 0x798 <__mulqi3_exit>
+ 794:	86 95       	lsr	r24
+ 796:	d1 f7       	brne	.-12     	; 0x78c <__mulqi3_loop>
+
+00000798 <__mulqi3_exit>:
+ 798:	80 2d       	mov	r24, r0
+ 79a:	08 95       	ret
+
+0000079c <__mulhi3>:
+ 79c:	00 24       	eor	r0, r0
+ 79e:	55 27       	eor	r21, r21
+ 7a0:	04 c0       	rjmp	.+8      	; 0x7aa <__mulhi3+0xe>
+ 7a2:	08 0e       	add	r0, r24
+ 7a4:	59 1f       	adc	r21, r25
+ 7a6:	88 0f       	add	r24, r24
+ 7a8:	99 1f       	adc	r25, r25
+ 7aa:	00 97       	sbiw	r24, 0x00	; 0
+ 7ac:	29 f0       	breq	.+10     	; 0x7b8 <__mulhi3+0x1c>
+ 7ae:	76 95       	lsr	r23
+ 7b0:	67 95       	ror	r22
+ 7b2:	b8 f3       	brcs	.-18     	; 0x7a2 <__mulhi3+0x6>
+ 7b4:	71 05       	cpc	r23, r1
+ 7b6:	b9 f7       	brne	.-18     	; 0x7a6 <__mulhi3+0xa>
+ 7b8:	80 2d       	mov	r24, r0
+ 7ba:	95 2f       	mov	r25, r21
+ 7bc:	08 95       	ret
+
+000007be <__udivmodqi4>:
+ 7be:	99 1b       	sub	r25, r25
+ 7c0:	79 e0       	ldi	r23, 0x09	; 9
+ 7c2:	04 c0       	rjmp	.+8      	; 0x7cc <__udivmodqi4_ep>
+
+000007c4 <__udivmodqi4_loop>:
+ 7c4:	99 1f       	adc	r25, r25
+ 7c6:	96 17       	cp	r25, r22
+ 7c8:	08 f0       	brcs	.+2      	; 0x7cc <__udivmodqi4_ep>
+ 7ca:	96 1b       	sub	r25, r22
+
+000007cc <__udivmodqi4_ep>:
+ 7cc:	88 1f       	adc	r24, r24
+ 7ce:	7a 95       	dec	r23
+ 7d0:	c9 f7       	brne	.-14     	; 0x7c4 <__udivmodqi4_loop>
+ 7d2:	80 95       	com	r24
+ 7d4:	08 95       	ret
+
+000007d6 <__udivmodhi4>:
+ 7d6:	aa 1b       	sub	r26, r26
+ 7d8:	bb 1b       	sub	r27, r27
+ 7da:	51 e1       	ldi	r21, 0x11	; 17
+ 7dc:	07 c0       	rjmp	.+14     	; 0x7ec <__udivmodhi4_ep>
+
+000007de <__udivmodhi4_loop>:
+ 7de:	aa 1f       	adc	r26, r26
+ 7e0:	bb 1f       	adc	r27, r27
+ 7e2:	a6 17       	cp	r26, r22
+ 7e4:	b7 07       	cpc	r27, r23
+ 7e6:	10 f0       	brcs	.+4      	; 0x7ec <__udivmodhi4_ep>
+ 7e8:	a6 1b       	sub	r26, r22
+ 7ea:	b7 0b       	sbc	r27, r23
+
+000007ec <__udivmodhi4_ep>:
+ 7ec:	88 1f       	adc	r24, r24
+ 7ee:	99 1f       	adc	r25, r25
+ 7f0:	5a 95       	dec	r21
+ 7f2:	a9 f7       	brne	.-22     	; 0x7de <__udivmodhi4_loop>
+ 7f4:	80 95       	com	r24
+ 7f6:	90 95       	com	r25
+ 7f8:	bc 01       	movw	r22, r24
+ 7fa:	cd 01       	movw	r24, r26
+ 7fc:	08 95       	ret
+
+000007fe <__divmodhi4>:
+ 7fe:	97 fb       	bst	r25, 7
+ 800:	07 2e       	mov	r0, r23
+ 802:	16 f4       	brtc	.+4      	; 0x808 <__divmodhi4+0xa>
+ 804:	00 94       	com	r0
+ 806:	06 d0       	rcall	.+12     	; 0x814 <__divmodhi4_neg1>
+ 808:	77 fd       	sbrc	r23, 7
+ 80a:	08 d0       	rcall	.+16     	; 0x81c <__divmodhi4_neg2>
+ 80c:	e4 df       	rcall	.-56     	; 0x7d6 <__udivmodhi4>
+ 80e:	07 fc       	sbrc	r0, 7
+ 810:	05 d0       	rcall	.+10     	; 0x81c <__divmodhi4_neg2>
+ 812:	3e f4       	brtc	.+14     	; 0x822 <__divmodhi4_exit>
+
+00000814 <__divmodhi4_neg1>:
+ 814:	90 95       	com	r25
+ 816:	81 95       	neg	r24
+ 818:	9f 4f       	sbci	r25, 0xFF	; 255
+ 81a:	08 95       	ret
+
+0000081c <__divmodhi4_neg2>:
+ 81c:	70 95       	com	r23
+ 81e:	61 95       	neg	r22
+ 820:	7f 4f       	sbci	r23, 0xFF	; 255
+
+00000822 <__divmodhi4_exit>:
+ 822:	08 95       	ret
+
+00000824 <_exit>:
+ 824:	f8 94       	cli
+
+00000826 <__stop_program>:
+ 826:	ff cf       	rjmp	.-2      	; 0x826 <__stop_program>
