@@ -1,0 +1,10 @@
+The device works as a power bank or mini energy storage, charging batteries with solar energy. The device requires a battery and a solar panel. 
+The maximum voltage of the battery and solar panel depends on the elements used. 
+The project with the values of the element from the scheme is designed for maximum voltage of the solar panel and battery max 22V.
+The following types of ecumulators can be used: NIMH, NICD, LI-ION, NIMH, lead-acid. WARNING! Cells must be equipped with balancers.
+Hardware has one programmable input or output. Look at the diagram. For example, a motion sensor or button can be connected to the input. 
+The output can be controlled, for example, by balancing machines or heating batteries on cold days.
+The presented project will control the output connected to heating batteries.
+The device is equipped with LM317 which we can control (R17) battery charging current. We set the output voltage LM2596 supplying LM317 with the R13 and R14 resistors. 
+Remember that LM317 must have a minimum supply voltage of 3V higher than the load voltage.
+The RGB LED indicates the status of the device. 2 NTC temperature sensors measure the temperature of LM317 and the battery pack.
