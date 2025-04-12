@@ -1,7 +1,0 @@
-The program provides for cooperation with the LI-FE-PO4 battery pack connected in series. The program cannot set rigid voltage values, thanks to which it is possible to configure the number of cells in the package.
-Configuration in main.h file is very important. Depending on the type of battery, the nominal and maximum voltage should be set as a percentage in relation to the maximum voltage of the cells. 
-This is very important because the device based on these values decides to load the package and turn off the load.
-During the first start, the device charges the battery pack to check the maximum voltage of the packet. 
-The main.h file allows you to set the charging time after reaching the state when the battery voltage does not increase and the number of cycles. 
-The program processes maintenance charging by the number of cycles that can be set in this file. Critical temperature values on NTC sensors are also set.
-This program provides power to the bulb for about 3 hours after dark. The time can be determined by TIME_OF_LIGHTING. The unit is about 0.5 seconds.
