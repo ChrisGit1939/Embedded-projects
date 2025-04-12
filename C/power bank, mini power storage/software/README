@@ -1,0 +1,12 @@
+The code has been ported from Microchip Studio to PlatformIO. 
+If running on another platform, you must modify the header file with function definitions.
+The program is designed to work 24/7. Its task is to turn on the light after dark for a specified period of time, or until the batteries discharge.
+The first battery charge is very time-consuming to record 
+the maximum battery voltage in order to calculate the nominal and minimum voltage.
+The main.h file should be set to the nominal and maximum voltage: max voltage = 100%nominal voltage = (define % < 100)
+minimum voltage (define % < 100%). This is very important.
+The program assumes the use of lithium batteries. Regardless of the degree of battery discharge, 
+the device starts charging until the maximum charge.
+Many parameters can be defined in the main.h file: critical temperatures of the LM317 and battery, 
+the time to turn on the LED lamp after dark, the intervals between measurements of the battery and solar panel, 
+the time and minimum number of charging cycles.
