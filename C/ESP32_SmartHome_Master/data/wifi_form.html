@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Konfiguracja Wi-Fi</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    form {
+      background: #ffffff;
+      padding: 20px;
+      display: inline-block;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="password"] {
+      width: 200px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Konfiguracja Wi-Fi</h1>
+
+  <form action="/save_wifi" method="POST">
+    <input type="text" name="ssid" placeholder="Nazwa sieci Wi-Fi" required>
+    <input type="password" name="password" placeholder="Hasło Wi-Fi" required>
+    <input type="submit" value="Zapisz">
+  </form>
+
+</body>
+</html>
