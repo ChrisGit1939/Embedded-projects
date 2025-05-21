@@ -22,9 +22,9 @@ void GPIO_config();
 void BlinkTask(void *parameter);
 void startBlinkTask();
 
-void Server_init(void);
-void dnsServerTask(void *parameter);
+
 
 String Welcome();
 
-void acces_point_init(void);
+void wifi_transmit_init(void);
+void webserver_init(void);

@@ -8,15 +8,18 @@ void setup()
   Serial.begin(9600);
   Serial.println("Start Device");
   GPIO_config();
+
+  wifi_transmit_init();
+
   startBlinkTask();
 
-  acces_point_init();
+  
 
   if (!LittleFS.begin()) {
     Serial.println("Błąd montowania LittleFS");
     return;
   }
-
+  
 
 
 
